@@ -6,21 +6,50 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node ./scripts/seed.js",
+    "seedUser" : "node ./scripts/seedUser.js",
+    "seedFeatures" : "node ./scripts/seedFeatures.js",
+    "seedCarFeatures" : "node ./scripts/seedCarFeature.js",
+    "seedImage": "node ./scripts/seedImage.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.3",
+    "@prisma/client": "^5.13.0",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@vis.gl/react-google-maps": "^0.11.0",
+    "aos": "^2.3.4",
+    "bcrypt": "^5.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.0.4",
+    "lucide-react": "^0.377.0",
+    "next": "14.2.3",
+    "next-auth": "^5.0.0-beta.18",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@svgr/webpack": "^8.1.0",
+    "@types/aos": "^3.0.7",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "@types/react-slick": "^0.23.13",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prisma": "^5.13.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

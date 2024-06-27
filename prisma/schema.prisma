@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Car {
+  id Int @id @default(autoincrement())
+  vin String @unique
+  model String
+  year Int
+  mileage Int
+  make String
+  price Int
+  listPrice Int?
+  door Int
+  sold Boolean @default(false)
+  display Boolean @default(true)
+  exteriorColor String
+  interiorColor String
+  bodyStyle String
+  fuelType String
+  transmission String
+  driveType String
+  engineType String
+  displacement Decimal @db.Decimal(3,1)
+  defaultImageId Int? @unique
+  defaultImage Image? @relation("DefaultImage",fields: [defaultImageId], references: [id])
+  images Image[]  @relation("CarImages")
+  carFeatures CarFeature[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Image {
+  id Int @id @default(autoincrement())
+  car Car @relation("CarImages", fields: [carId], references: [id])
+  carId Int
+  url String
+  type String
+  carDefaultImage Car? @relation("DefaultImage")
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  password String
+  role String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Feature{
+  id Int @id @default(autoincrement())
+  name String
+  category String
+  description String?
+  CarFeature CarFeature[]
+  @@unique([name, category])
+}
+
+model CarFeature{
+  id Int @id @default(autoincrement())
+  carId Int
+  car Car @relation(fields: [carId], references: [id])
+  featureId Int
+  feature Feature @relation(fields: [featureId], references: [id])
+  @@unique([carId, featureId])
+}
