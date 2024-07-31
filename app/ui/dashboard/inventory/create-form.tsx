@@ -522,14 +522,11 @@ export default function Form({
                                 ))}
                         </div>
                     </fieldset>
-
-
-
                     {
                         featureCategories.map((category) => {
                             const iFeatures = features.filter((feature) => feature.category === category);
                             return (
-                                <div className=' col-span-12'>
+                                <div className=' col-span-12' key={category}>
                                     <CheckFeatures category={category} features={iFeatures} />
                                 </div>
                             )

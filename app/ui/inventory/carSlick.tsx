@@ -77,7 +77,7 @@ export default function CarSlick({
                         centerMode={true}
                     >
                         {imageArr?.map((img, index) => (
-                            <div className=" px-2 w-full inline-block">
+                            <div className=" px-2 w-full inline-block" key={`${img.carId}.${img.id}`}>
                                 <div key={index} className=" aspect-w-3 aspect-h-2 border rounded-sm overflow-hidden">
                                     <Image className=" object-cover w-full h-full"
                                         src={`/carImage/${img.carId}.${img.id}.${img.type}`}

@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CarImage } from "@/app/lib/definitions";
 import Image from "next/image";
-import { join } from "path";
+// import { join } from "path";
 import { Button } from "@/app/ui/button";
 import clsx from "clsx";
 
@@ -22,11 +22,11 @@ export default function ImgSlick({
     defaultImg: number | null;
 }) {
 
+    let sliderRef = useRef<Slider | null>(null);
+
     if (!images) {
         return;;
     }
-
-    let sliderRef = useRef<Slider | null>(null);
 
     const next = () => {
         sliderRef.current?.slickNext();

@@ -35,7 +35,7 @@ export default async function CardCarousel() {
             <Carousel className="">
                 <CarouselContent className="pt-4 px-8">
                     {cars.map((car) => (
-                        <CarouselItem className=" sm:basis-1/2  lg:basis-1/4">
+                        <CarouselItem className=" sm:basis-1/2  lg:basis-1/4" key={car.bodyStyle}>
                             <CardForCarousel 
                                 catogray={car.bodyStyle}
                                 price={car.price} 
