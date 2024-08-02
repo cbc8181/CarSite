@@ -9,6 +9,7 @@ import Image from "next/image";
 // import { join } from "path";
 import { Button } from "@/app/ui/button";
 import clsx from "clsx";
+// import { image } from "@/cloudinary";
 
 export default function ImgSlick({
     images,
@@ -68,9 +69,11 @@ export default function ImgSlick({
             </div>
             <Slider ref={sliderRef} {...settings}>
                 {images.map((image) => (
+  
                     <div key={image.id} className="flex justify-center">
-                        <Image
+                        <Image  
                             src={`/carImage/${image.carId}.${image.id}.${image.type}`}
+                            // src={`${image.url===null ? ` ` : image.url}`}
                             alt={`/carImage/${image.carId}.${image.id}.${image.type}`}
                             width={200}
                             height={200}

@@ -49,10 +49,17 @@ export default function CarSlick({
                             {imageArr?.map((img, index) => (
                                 <div key={index} className=" aspect-w-4 aspect-h-3">
                                     <Image className=" object-cover w-full h-full"
-                                        src={`${imgPath}/${img.carId}.${img.id}.${img.type}`}
-                                        alt={`${img.carId}.${img.id}.jpeg`}
+                                        // src={`${imgPath}/${img.carId}.${img.id}.${img.type}`}
+                                        // src={`${img.url}`}
+                                        src={img.url === 'null' || !img.url ? '/default.jpg' : img.url}
+                                        alt={`${img.carId}.${img.id}.${img.type}`}
                                         layout="fill"
                                     ></Image>
+                                     {/* <img  src={`/public/car_image/${img.carId}.${img.id}.${img.type}`} 
+                                        alt={`car:${img.carId} image:#${img.id}`} 
+                                        className="  object-cover w-full h-full" 
+                                        loading="lazy"
+                                        /> */}
                                 </div>
                             ))}
                         </Slider>
@@ -80,10 +87,17 @@ export default function CarSlick({
                             <div className=" px-2 w-full inline-block" key={`${img.carId}.${img.id}`}>
                                 <div key={index} className=" aspect-w-3 aspect-h-2 border rounded-sm overflow-hidden">
                                     <Image className=" object-cover w-full h-full"
-                                        src={`/carImage/${img.carId}.${img.id}.${img.type}`}
+                                        // src={`/carImage/${img.carId}.${img.id}.${img.type}`}
+                                        // src={`${img.url}`}
+                                        src={img.url === 'null' || !img.url ? '/default.jpg' : img.url}
                                         alt={`car:${img.carId} image:#${img.id}`}
                                         layout="fill"
                                     ></Image>
+                                    {/* <img  src={`/public/car_image/${img.carId}.${img.id}.${img.type}`} 
+                                        alt={`car:${img.carId} image:#${img.id}`} 
+                                        className=" w-full h-full object-cover"
+                                        loading="lazy"
+                                    /> */}
                                 </div>
                             </div>
                         ))}

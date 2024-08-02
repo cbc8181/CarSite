@@ -11,6 +11,8 @@ import { Car } from '@prisma/client';
 import { prisma } from "@/lib/prisma";
 import { join } from 'path';
 import { writeFile } from 'fs/promises';
+import cloudinary from '@/cloudinary';
+import DatauriParser from 'datauri/parser';
 
 
 export type State = {
@@ -441,7 +443,9 @@ export async function uploadImage(prevState: uploadImgState, data: FormData){
             const bytes = await file.arrayBuffer();
             const buffer = Buffer.from(bytes);
 
-            const path = join(`./public/carImage/${newImage.carId}.${newImage.id}.${fileExtention}`);
+            // const path = join(`./public/carImage/${newImage.carId}.${newImage.id}.${fileExtention}`);
+            const path = join(`./carImage/${newImage.carId}.${newImage.id}.${fileExtention}`);
+          
             await writeFile(path, buffer);
             console.log(`open ${path} to see the uploaded file`);
         }
@@ -461,3 +465,141 @@ export async function uploadImage(prevState: uploadImgState, data: FormData){
         return { status: 'error', message: 'Failed to upload image' };
     }
 }
+
+
+// export async function nUploadImage(prevState: uploadImgState, data: FormData) {
+//     const MIME_TYPE_MAP = {
+//       'image/jpeg': 'jpg',
+//       'image/png': 'png',
+//       'image/gif': 'gif',
+//       'image/bmp': 'bmp',
+//       'image/webp': 'webp',
+//       'image/svg+xml': 'svg',
+//       'image/x-icon': 'ico',
+//       'image/tiff': 'tiff',
+//       'image/heif': 'heif',
+//       'image/heic': 'heic',
+//     };
+  
+//     try {
+//       const files = data.getAll('file') as File[];
+  
+//       for (const file of files) {
+//         const fileType = file.type as keyof typeof MIME_TYPE_MAP;
+//         const fileExtension = MIME_TYPE_MAP[fileType];
+  
+//         if (!fileExtension) {
+//           throw new Error('Invalid file type');
+//         }
+        
+//            // 使用 FormData 上传文件
+//            const form = new FormData();
+//            form.append('file', file);
+//            //form.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET); // 需要在 Cloudinary 中设置 upload preset
+     
+//            // 上传到 Cloudinary
+//            const result = await cloudinary.uploader.upload(file, {
+//              upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+//              folder: 'your-folder-name', // 替换为你想要存储的文件夹名称
+//              use_filename: true,
+//              unique_filename: true,
+//            });
+
+//         // convert the image to base64 string
+//         const reader = new FileReader();
+//         reader.readAsDataURL(file);
+//         reader.onloadend = async () => {
+//           const base64data = reader.result as string;
+//           // upload the image to Cloudinary
+//           const result = await cloudinary.uploader.upload(base64data, {
+//             folder: 'car_images', 
+//             // use_filename: true,
+//             unique_filename: true, 
+//           });
+  
+//           // save the image URL to the database
+//           const newImage = await prisma.image.create({
+//             data: {
+//               carId: Number(data.get('carId')),
+//               url: result.secure_url, 
+//               type: fileExtension,
+//             },
+//           });
+  
+//         };
+//       }
+  
+//       return { status: 'success', message: 'Image uploaded successfully'};
+//     } catch (error) {
+//       console.error(error);
+//       return { status: 'error', message: 'Failed to upload image' };
+//     }
+//   }
+  
+
+// export async function nUploadImage(prevState: uploadImgState,formData: FormData){
+
+//     const MIME_TYPE_MAP = {
+//         'image/jpeg': 'jpg',
+//         'image/png': 'png',
+//         'image/gif': 'gif',
+//         'image/bmp': 'bmp',
+//         'image/webp': 'webp',
+//         'image/svg+xml': 'svg',
+//         'image/x-icon': 'ico',
+//         'image/tiff': 'tiff',
+//         'image/heif': 'heif',
+//         'image/heic': 'heic'
+//       };
+
+//     try {
+//         const files = formData.getAll('file') as File[];
+//         const uploadFiles = [];
+
+//         // create a neew Data URI parser
+//         const parser = new DatauriParser();
+
+//         for (const file of files) {
+//             const fileType = file.type as keyof typeof MIME_TYPE_MAP;
+//             const fileExtention = MIME_TYPE_MAP[fileType];
+
+//             if (!fileExtention) {
+//                 throw new Error('Invalid file type');
+//             }
+
+//             const base64Image = parser.format(path.extname(file.name).toString(), file.buffer);
+//             const uploadedImageResponse = await cloudinary.uploader.upload(base64Image.content, 'flashcards', { resource_type: 'image' });
+
+//             const newImage = await prisma.image.create({
+//                 data: {
+//                     carId: Number(formData.get('carId')),
+//                     url: '',
+//                     type: fileExtention
+//                 }
+//             });
+
+//             const bytes = await file.arrayBuffer();
+//             const buffer = Buffer.from(bytes);
+
+//             // const path = join(`./public/carImage/${newImage.carId}.${newImage.id}.${fileExtention}`);
+//             const path = join(`./carImage/${newImage.carId}.${newImage.id}.${fileExtention}`);
+          
+//             await writeFile(path, buffer);
+//             console.log(`open ${path} to see the uploaded file`);
+//         }
+
+//         // if(!file){
+//         //     throw new Error('No file uploaded');
+//         // }
+
+//         // const bytes = await file.arrayBuffer();
+//         // const buffer = Buffer.from(bytes);
+
+//         // const path = join('/public', 'tmp', file.name);
+//         // await writeFile(path, buffer);
+//         // console.log(`open ${path} to see the uploaded file`);
+//         return { status: 'success', message: 'Image uploaded successfully' };
+//     } catch (error) {
+//         return { status: 'error', message: 'Failed to upload image' };
+//     }
+// }

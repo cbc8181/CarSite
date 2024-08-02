@@ -5,6 +5,7 @@ import type { CarDetail, CarStartsByBody, CarsBaseInfo, SearchParams } from "./d
 import { countBodyStyles, countMakes, countModels } from "../lib/util";
 import { unstable_noStore as noStore } from 'next/cache';
 import { Feature } from "@prisma/client";
+import exp from "constants";
 
 export async function getCarData() {
 
@@ -52,6 +53,7 @@ export async function getCarDetailById(carId: string) {
                     id: true,
                     carId: true,
                     type: true,
+                    url: true,
                 }
             },
             carFeatures: {
@@ -289,5 +291,29 @@ export async function getCarStatsByBodyStyle() {
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch car stats by body style.');
+    }
+}
+
+export async function getCarImg(carId: number) {
+    try {
+        // only fetch the first image
+        const image = await prisma.image.findFirst({
+            where: {
+                carId: carId,
+                // and url is not null and not 'null'
+                url: {
+                    // not: null,
+                    not: 'null',
+                }
+            },
+            select: {
+                url: true,
+            }
+        });
+
+        return image?.url || '';
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch car images.');
     }
 }

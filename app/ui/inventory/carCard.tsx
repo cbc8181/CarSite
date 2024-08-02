@@ -1,15 +1,22 @@
 import { CarsBaseInfo } from "@/app/lib/definitions";
 import Image from "next/image";
 import TagSvg from "../../../public/tag.svg";
+import { getCarImg } from "@/app/lib/data";
 
-export default function CarCard({ car }: { car: CarsBaseInfo }) {
+export default async function CarCard({ car }: { car: CarsBaseInfo }) {
+   
+    // get the default image of the car
+    const imgUrl  = await getCarImg(car.id);
+
     return (
         <div className=" bg-white transition duration-200 shadow-sm border-slate-200 flex flex-col text-slate-800">
             <div className=" w-full">
                 <a href={`/inventory/${car.year}-${car.make}-${car.model}/${car.id}`} className=" flex flex-col h-full no-underline hover:no-underline focus:no-underline">
                     <div className=" aspect-w-4 aspect-h-3 border-b border-slate-100 relative">
                         <Image
-                            src = { car.defaultImageId ? `/carImage/${car.id}.${car.defaultImageId}.${car.defaultImage.type}` : '/default.jpg'}
+                            // src = { car.defaultImageId ? `/carImage/${car.id}.${car.defaultImageId}.${car.defaultImage.type}` : '/default.jpg'}
+                            // src = {imgUrl || imgUrl !== 'null' ? imgUrl : '/default.jpg'}
+                            src={imgUrl === 'null' || !imgUrl ? '/default.jpg' : imgUrl}
                             alt= {`${car.id} default image`}
                             layout="fill"
                         ></Image>
