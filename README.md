@@ -5,7 +5,7 @@ The website can be accessed at: https://ccprogramlearninglab.org/
 
 ## Technologies Used
 
-The website utilizes:
+The website is built using the following technologies:
 
 - **Next.js**
 - **Tailwind CSS**
