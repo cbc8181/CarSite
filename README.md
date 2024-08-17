@@ -1,4 +1,4 @@
-# Used Car Responsive Website
+# Used Car Website
 
 This is a responsive used car website designed for dealers to display their inventory, receive service requests from customers, and provide an administrator dashboard for website maintenance.
 The website can be accessed at: https://ccprogramlearninglab.org/
